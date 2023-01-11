@@ -21,9 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = new User();
     $user->email = $email;
     $user->password = $password;
-    $user->login();
-    header('Location: /home');
-    exit;
+    if($user->login()) {
+        header('Location: /home');
+        exit;
+    } else {
+        $errorMsg = 'Onjuist e-mailadres of wachtwoord, probeer het opnieuw';
+    }
 
 }
 
@@ -45,6 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ol>
     </nav>
     <div class="row gy-3 ">
+        <!-- error paragraph -->
+        <?php if (isset($errorMsg)) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?= $errorMsg ?>
+            </div>
+        <?php endif; ?>
         <form action="/login" method="post">
 
             <div class="mb-3">
@@ -60,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </form>
     </div>
-
     <hr>
     <?php
     include_once('defaults/footer.php');

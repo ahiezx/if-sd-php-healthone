@@ -29,10 +29,11 @@ switch ($params[1]) {
         break;
 
     case 'category':
-        include_once "../Templates/home.php";
+        include_once "../Templates/category.php";
         break;
 
     case 'product':
+        include_once "../Templates/product.php";
         break;
 
     case 'login':

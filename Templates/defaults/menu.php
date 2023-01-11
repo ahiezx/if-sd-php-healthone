@@ -14,11 +14,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/categories">sportapparaat</a>
                 </li>
-                <?php if (!isset($_SESSION['user'])): ?>
-                    <li class="nav-item">
-                        <a class="nav-link"  href="/register">registreren</a>
-                    </li>
-                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">contact</a>
                 </li>
@@ -27,10 +22,15 @@
                 <li class="nav-item">
                     <?php if (isset($_SESSION['user'])): ?>
                         <a class="nav-link" href="/logout">uitloggen</a>
-                    <?php else: ?>
+                    <?php else: ?>                    
                     <a class="nav-link" href="/login">inloggen</a>
                     <?php endif; ?>
                 </li>
+                <?php if (!isset($_SESSION['user'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link"  href="/register">registreren</a>
+                    </li>
+                <?php endif; ?>                    
             </ul>
         </div>
     </div>

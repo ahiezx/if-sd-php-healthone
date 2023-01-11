@@ -25,6 +25,11 @@ class User
             'last_name' => $this->last_name,
             'role' => $this->role,
         ]);
+        if ($statement->rowCount() > 0) {
+            $this->id = $pdo->lastInsertId();
+            return true;
+        }
+        return false;
     }
 
     public function login()
