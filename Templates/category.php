@@ -18,6 +18,7 @@ switch ($params[1]) {
 
     case $params[1]:
         $category = $category->getCategoryById($params[2]);
+        if($category->id == null) {header("Location: /home");}
         $titleSuffix = " | " . $category->name;
         break;
 }
@@ -63,7 +64,7 @@ include_once('defaults/head.php');
                         <p class="lead">
                             <?= htmlspecialchars($category->description) ?>
                         </p>
-                        <a href="#" class="btn btn-warning text-light">
+                        <a href="#/review" class="btn btn-warning text-light">
                             Add Review
                         </a>
                     </div>
