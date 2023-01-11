@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user->role = 'user';
     if ($user->register()) {
         header('Location: /login');
+        $_SESSION['registerSuccess'] = true;
         exit;
     } else {
         $errorMsg = 'Er is iets misgegaan, probeer het opnieuw';

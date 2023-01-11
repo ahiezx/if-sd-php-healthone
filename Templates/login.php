@@ -30,6 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 }
 
+
+// check if the user was redirected from /register and if so show a success message
+if (isset($_SESSION['registerSuccess'])) {
+    $successMsg = 'U bent succesvol geregistreerd, u kunt nu inloggen';
+    unset($_SESSION['registerSuccess']);
+}
+
 ?>
 
 <body>
@@ -52,6 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($errorMsg)) : ?>
             <div class="alert alert-danger" role="alert">
                 <?= $errorMsg ?>
+            </div>
+        <?php endif; ?>
+        <?php if (isset($successMsg)) : ?>
+            <div class="alert alert-success" role="alert">
+                <?= $successMsg ?>
             </div>
         <?php endif; ?>
         <form action="/login" method="post">
