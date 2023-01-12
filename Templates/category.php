@@ -14,6 +14,8 @@ $currentCategory = "";
 
 $category = new Category();
 
+$product = new Product();
+
 switch ($params[1]) {
 
     case $params[1]:
@@ -56,18 +58,22 @@ include_once('defaults/head.php');
                     <?= htmlspecialchars($category->name) ?>
                 </h1>
                 <div class="d-flex">
-                    <div class="col-sm-4">
-                        <img class="product-img img-responsive center-block"
-                            src='/img/<?= htmlspecialchars($category->picture) ?>' />
-                    </div>
-                    <div class="col-sm-8">
-                        <p class="lead">
-                            <?= htmlspecialchars($category->description) ?>
-                        </p>
-                        <a href="#/review" class="btn btn-warning text-light">
-                            Add Review
-                        </a>
-                    </div>
+                    <!-- get products by category id -->
+                    <?php
+                        $products = $product->getProductsByCategoryId($category->id);
+                        foreach ($products as $product) {
+                            echo "<div class='col-md-4'>";
+                            echo "<div class='card'>";
+                            echo "<img src='/img/" . htmlspecialchars($product->picture) . "' class='card-img-top w-50' alt='...'>";
+                            echo "<div class='card-body'>";
+                            echo "<h5 class='card-title'>" . htmlspecialchars($product->name) . "</h5>";
+                            echo "<p class='card-text'>" . htmlspecialchars($product->description) . "</p>";
+                            echo "<a href='/product/" . htmlspecialchars($product->id) . "' class='btn btn-primary'>Review</a>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</div>";
+                        }
+                    ?>
                 </div>
 
             </div>

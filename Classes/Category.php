@@ -27,5 +27,18 @@ class Category
         $this->description = $category->description;
         return $this;
     }
+
+    public function getCategoryByProductId($id)
+    {
+        global $pdo;
+        $statement = $pdo->prepare('SELECT * FROM category WHERE id = :id');
+        $statement->execute(['id' => $id]);
+        $category = $statement->fetch(PDO::FETCH_OBJ);
+        $this->id = $category->id;
+        $this->name = $category->name;
+        $this->picture = $category->picture;
+        $this->description = $category->description;
+        return $this;
+    }
     
 }

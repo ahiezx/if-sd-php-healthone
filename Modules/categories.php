@@ -13,3 +13,4 @@ function getCategoryName(int $id):string
     $category = $pdo->query('SELECT * FROM category WHERE id = ' . $id)->fetchObject('Category');
     return $category->name;
 }
+
