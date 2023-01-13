@@ -10,18 +10,24 @@
 
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="navbar-nav">
-
                 <li class="nav-item">
                     <a class="nav-link" href="/categories">sportapparaat</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">contact</a>
                 </li>
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']->role == 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/home">beheer</a>
+                    </li>
+                <?php endif; ?>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <?php if (isset($_SESSION['user'])): ?>
-                        <a class="nav-link" href="/logout">uitloggen</a>
+                        <a class="nav-link" href="/logout">uitloggen
+                            (<?php echo $_SESSION['user']->firstname . " " . $_SESSION['user']->lastname; ?>)
+                        </a>
                     <?php else: ?>                    
                     <a class="nav-link" href="/login">inloggen</a>
                     <?php endif; ?>

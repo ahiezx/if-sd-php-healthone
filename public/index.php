@@ -1,5 +1,6 @@
 <?php
 require '../Modules/categories.php';
+require '../Modules/products.php';
 require '../Modules/login.php';
 require '../Modules/logout.php';
 require '../Modules/database.php';

@@ -45,4 +45,10 @@ class Review
             ]);
         }
     }
+
+    public function getReviewByProductId($id) {
+
+        
+
+    }
 }
