@@ -17,13 +17,13 @@ class User
     public function register()
     {
         global $pdo;
-        $statement = $pdo->prepare('INSERT INTO users (email, password, firstname, lastname, role) VALUES (:email, :password, :first_name, :last_name, :role)');
+        $statement = $pdo->prepare('INSERT INTO users (email, password, first_name, last_name, role) VALUES (:email, :password, :first_name, :last_name, :role)');
         $statement->execute([
-            'email' => $this->email,
+            'email' => filter_var($this->email, FILTER_SANITIZE_EMAIL),
             'password' => password_hash($this->password, PASSWORD_DEFAULT),
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'role' => $this->role,
+            'first_name' => filter_var($this->first_name, FILTER_SANITIZE_STRING),
+            'last_name' => filter_var($this->last_name, FILTER_SANITIZE_STRING),
+            'role' => filter_var($this->role, FILTER_SANITIZE_STRING)
         ]);
         if ($statement->rowCount() > 0) {
             $this->id = $pdo->lastInsertId();
@@ -56,6 +56,15 @@ class User
     public function getFullName()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getUserById($id)
+    {
+        global $pdo;
+        $statement = $pdo->prepare('SELECT * FROM users WHERE id = :id');
+        $statement->execute(['id' => filter_var($id, FILTER_SANITIZE_NUMBER_INT)]);
+        $user = $statement->fetchObject('User');
+        return $user;
     }
 
 }

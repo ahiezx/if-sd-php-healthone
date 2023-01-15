@@ -16,12 +16,19 @@ if (!isAdmin()) {
             break;
 
         case 'products':
+            include_once('../Templates/admin/products.php');
             break;
 
         case 'add':
+            include_once('../Templates/admin/add.php');
             break;
 
         case 'delete':
+            include_once('../Templates/admin/delete.php');
+            break;
+
+        case 'edit':
+            include_once('../Templates/admin/edit.php');
             break;
 
         default:

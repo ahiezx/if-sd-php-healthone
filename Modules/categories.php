@@ -10,6 +10,7 @@ function getCategories():array
 function getCategoryName(int $id):string
 {
     global $pdo;
+    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     $category = $pdo->query('SELECT * FROM category WHERE id = ' . $id)->fetchObject('Category');
     return $category->name;
 }

@@ -21,10 +21,7 @@ class Product
         FROM products 
         INNER JOIN category ON products.category_id = category.id 
         WHERE category.id = :id");
-
-        $id = filter_var($id, FILTER_VALIDATE_INT);
-        
-        $stmt->execute(['id' => $id]);
+        $stmt->execute(['id' => filter_var($id, FILTER_SANITIZE_NUMBER_INT)]);
         $products = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $products;
     }
@@ -36,8 +33,11 @@ class Product
         FROM products 
         INNER JOIN category ON products.category_id = category.id 
         WHERE products.id = :id');
-        $statement->execute(['id' => $id]);
+        $statement->execute(['id' => filter_var($id, FILTER_SANITIZE_NUMBER_INT)]);
         $product = $statement->fetch(PDO::FETCH_OBJ);
+        if (!$product) {
+            return false;
+        }
         $this->id = $product->id;
         $this->name = $product->name;
         $this->picture = $product->picture;

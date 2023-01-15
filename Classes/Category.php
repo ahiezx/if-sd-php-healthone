@@ -19,7 +19,7 @@ class Category
 
         global $pdo;
         $statement = $pdo->prepare('SELECT * FROM category WHERE id = :id');
-        $statement->execute(['id' => $id]);
+        $statement->execute(['id' => filter_var($id, FILTER_SANITIZE_NUMBER_INT)]);
         $category = $statement->fetch(PDO::FETCH_OBJ);
         $this->id = $category->id;
         $this->name = $category->name;
@@ -32,7 +32,7 @@ class Category
     {
         global $pdo;
         $statement = $pdo->prepare('SELECT * FROM category WHERE id = :id');
-        $statement->execute(['id' => $id]);
+        $statement->execute(['id' => filter_var($id, FILTER_SANITIZE_NUMBER_INT)]);
         $category = $statement->fetch(PDO::FETCH_OBJ);
         $this->id = $category->id;
         $this->name = $category->name;
