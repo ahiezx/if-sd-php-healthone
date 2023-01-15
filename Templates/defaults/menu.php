@@ -16,9 +16,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">contact</a>
                 </li>
-                <?php if (isset($_SESSION['user']) && $_SESSION['user']->role == 'admin'): ?>
+                <?php if (isAdmin()): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/home">beheer</a>
+                    </li>
+                <?php endif; ?>
+                <?php if (isMember()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member">profiel</a>
                     </li>
                 <?php endif; ?>
             </ul>
@@ -26,7 +31,7 @@
                 <li class="nav-item">
                     <?php if (isset($_SESSION['user'])): ?>
                         <a class="nav-link" href="/logout">uitloggen
-                            (<?php echo $_SESSION['user']->first_name . " " . $_SESSION['user']->last_name; ?>)
+                            (<?php echo $_SESSION['user']->getFullName(); ?>)
                         </a>
                     <?php else: ?>                    
                     <a class="nav-link" href="/login">inloggen</a>

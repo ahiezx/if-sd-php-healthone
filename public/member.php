@@ -6,10 +6,12 @@ if (!isMember()) {
     logout();
     header ("location:/home");
 } else {
+    
 
     switch ($params[2]) {
 
         case 'home':
+            include_once('../Templates/member/home.php');
             break;
 
         case 'products':
@@ -17,8 +19,10 @@ if (!isMember()) {
         case 'profile':
             break;
         case 'editprofile':
+            include_once('../Templates/member/editprofile.php');
             break;
         case 'changepassword':
+            include_once('../Templates/member/changepassword.php');
             break;
 
         case 'categories':
@@ -34,6 +38,7 @@ if (!isMember()) {
             break;
 
         default:
+            header('Location: /member/home');
             break;
     }
 }

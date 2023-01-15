@@ -30,7 +30,7 @@ function isMember():bool
     if(isset($_SESSION['user'])&&!empty($_SESSION['user']))
     {
         $user=$_SESSION['user'];
-        if ($user->role === "member")
+        if ($user->role === "user")
         {
             return true;
         }

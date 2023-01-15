@@ -25,32 +25,24 @@ $products = getProducts();
                 <?= $message ?>
             </div>
         <?php endif; ?>
-        <h4>Beheer supportapparaten</h4>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">nr</th>
-                    <th scope="col" class="col-5">Naam</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Aanpassen</th>
-                    <th scope="col">Verwijderen</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($products as $product): ?>
-                    <tr>
-                        <th scope="row"><?= $product->id ?></th>
-                        <td><?= $product->name ?></td>
-                        <td><?= getCategoryName($product->category_id) ?></td>
-                        <td><a href="/admin/products/edit/<?= $product->id ?>" class="btn btn-primary">Aanpassen</a></td>
-                        <td><a href="/admin/products/delete/<?= $product->id ?>" class="btn btn-danger">Verwijderen</a></td>
-                    </tr>
-                <?php endforeach; ?>
-        </table>
-            <hr>
-            <?php
-            include_once('../Templates/defaults/footer.php');
-            ?>
+        <h4>Beheer</h4>
+        <div class="container mx-auto">
+            <div class="row text-center mt-2">
+                <div class="col-4">
+                    <a href="/admin/products" class="btn btn-primary">Supportapparaten</a>
+                </div>
+                <div class="col-4">
+                    <a href="/admin/categories" class="btn btn-primary">Categorieën</a>
+                </div>
+                <div class="col-4">
+                    <a href="/admin/users" class="btn btn-primary">Gebruikers</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <?php
+        include_once('../Templates/defaults/footer.php');
+        ?>
     </div>
 </body>
 
