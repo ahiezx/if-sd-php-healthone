@@ -48,6 +48,7 @@ class Product
 
     public function update()
     {
+
         global $pdo;
         $statement = $pdo->prepare('UPDATE products SET name = :name, description = :description, category_id = :category_id WHERE id = :id');
         $statement->execute([
@@ -56,10 +57,8 @@ class Product
             'category_id' => filter_var($this->category_id, FILTER_SANITIZE_NUMBER_INT),
             'id' => filter_var($this->id, FILTER_SANITIZE_NUMBER_INT)
         ]);
-        if ($statement->rowCount() > 0) {
-            return true;
-        }
-        return false;
+        return $statement->rowCount() > 0;
+
     }
 
 

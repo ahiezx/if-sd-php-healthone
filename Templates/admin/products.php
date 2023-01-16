@@ -9,15 +9,15 @@ $products = getProducts();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     
-    // Update product
-    if(isset($_POST['update'])) {
-        $product = new Product();
-        $product->id = $_POST['id'];
-        $product->name = $_POST['name'];
-        $product->description = $_POST['description'];
-        $product->category_id = $_POST['category_id'];
-        die(var_dump($product->update()));
-    }
+    // Update product using object
+    $product = new Product();
+    $product->id = $params[4];
+    $product->name = $_POST['name'];
+    $product->description = $_POST['description'];
+    $product->category_id = $_POST['category_id'];
+    var_dump($product->update());
+
+    // die(var_dump($product));
 }
 
 ?>
@@ -74,8 +74,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div class='col-md-6 form-group'>
                         <label for="category">Category</label>
-                        <select class="form-control" name="category" required>
+                        <select class="form-control" name="category_id" required>
                             <?php foreach(getCategories() as $category) { ?>
+                                <!-- echo $category->id; -->
                                 <option value="<?= $category->id ?>" <?= $category->id == $product->category_id ? 'selected' : '' ?>><?= $category->name ?></option>
                             <?php } ?>
                         </select>
