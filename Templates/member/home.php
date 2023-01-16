@@ -23,11 +23,41 @@ $user = $_SESSION['user'];
                 <h6><?= $user->getFullName() ?></h6>
                 <p><?= $user->email ?></p>
             </div>
-            <div class="col-md-6">
-                <a href="/member/editprofile" class="btn btn-primary">Edit profile</a>
-                <a href="/member/changepassword" class="btn btn-primary">Edit password</a>
+            <div class="col-md-12">
+                <div class='row'>
+                <div class='col-md-6'>
+                    <p>
+                        email
+                    </p>
+                    <hr>
+                    <p>
+                        firstname
+                    </p>
+                    <hr>
+                    <p>
+                        lastname
+                    </p>
+                    <hr>
+                </div>
+                <div class='col-md-6'>
+                    <p>
+                        <?= $user->email ?>
+                    </p>
+                    <hr>
+                    <p>
+                        <?= $user->first_name ?>
+                    </p>
+                    <hr>
+                    <p>
+                        <?= $user->last_name ?>
+                    </p>
+                    <hr>
+                </div>           
+                </div>     
             </div>
         </div>
+        <a class='btn btn-success' href="editprofile">Profiel aanpassen</a>
+        <a class='btn btn-danger' href="changepassword">Password aanpassen</a>
             <hr>
             <?php
             include_once('../Templates/defaults/footer.php');

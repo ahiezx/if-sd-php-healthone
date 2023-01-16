@@ -46,3 +46,13 @@ function makeRegistration():string
 {
 
 }
+
+function isLogged():bool
+{
+    //controleer of er ingelogd is
+    if(isset($_SESSION['user'])&&!empty($_SESSION['user']))
+    {
+        return true;
+    }
+    return false;
+}

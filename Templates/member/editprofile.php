@@ -7,6 +7,22 @@ global $params;
 
 $user = $_SESSION['user'];
 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $user->first_name = $_POST['first_name'];
+    $user->last_name = $_POST['last_name'];
+    $user->email = $_POST['email'];
+
+    if($user->update()) {
+        $_SESSION['user'] = $user;
+        $success = 'Profile updated successfully';
+    } else {
+        $error = 'Something went wrong';
+    }
+
+}
+
 ?>
 
 <body>
@@ -18,23 +34,30 @@ $user = $_SESSION['user'];
         ?>
         <h4>Edit Profile</h4>
 
-        <form>
+        <?php if (isset($error)) : ?>
+        <div class="alert alert-danger" role="alert">
+            <?php echo $error; ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if (isset($success)) : ?>
+        <div class="alert alert-success" role="alert">
+            <?php echo $success; ?>
+        </div>
+        <?php endif; ?>
+
+        <form action="#" method="post">
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                <label for="name">First Name</label>
+                <input type="text" class="form-control" name='first_name' id="name" placeholder="Enter your name">
             </div>
+            <div class="form-group">
+                <label for="name">Last Name</label>
+                <input type="text" class="form-control" name='last_name' id="name" placeholder="Enter your name">
+            </div>            
             <div class="form-group mt-2">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter your email">
-            </div>
-            <div class="form-group mt-2">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter your password">
-            </div>
-            <div class="form-group mt-2">
-                <label for="password_confirmation">Confirm Password</label>
-                <input type="password" class="form-control" id="password_confirmation"
-                    placeholder="Confirm your password">
+                <input type="email" class="form-control" name='email' id="email" placeholder="Enter your email">
             </div>
             <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
         </form>

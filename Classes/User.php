@@ -67,4 +67,21 @@ class User
         return $user;
     }
 
+    public function update()
+    {
+        global $pdo;
+        $statement = $pdo->prepare('UPDATE users SET email = :email, password = :password, first_name = :first_name, last_name = :last_name WHERE id = :id');
+        $statement->execute([
+            'email' => filter_var($this->email, FILTER_SANITIZE_EMAIL),
+            'password' => password_hash($this->password, PASSWORD_DEFAULT),
+            'first_name' => filter_var($this->first_name, FILTER_SANITIZE_STRING),
+            'last_name' => filter_var($this->last_name, FILTER_SANITIZE_STRING),
+            'id' => filter_var($this->id, FILTER_SANITIZE_NUMBER_INT)
+        ]);
+        if ($statement->rowCount() > 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

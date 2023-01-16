@@ -7,6 +7,19 @@ global $params;
 
 $products = getProducts();
 
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    // Update product
+    if(isset($_POST['update'])) {
+        $product = new Product();
+        $product->id = $_POST['id'];
+        $product->name = $_POST['name'];
+        $product->description = $_POST['description'];
+        $product->category_id = $_POST['category_id'];
+        die(var_dump($product->update()));
+    }
+}
+
 ?>
 
 <body>
@@ -77,6 +90,7 @@ $products = getProducts();
                         <input class="form-control" type="file" id="formFile">
                     </div>
                     <div class='col-md-12 form-group mt-2'>
+                        <input type="hidden" name="update" value="update">
                         <input type="submit" class="btn btn-primary" name="submit" value="Opslaan">
                     </div>
                 </div>

@@ -15,3 +15,9 @@ function getCategoryName(int $id):string
     return $category->name;
 }
 
+function getCategoriesIds():array
+{
+    global $pdo;
+    $categories = $pdo->query('SELECT id FROM category')->fetchAll(PDO::FETCH_COLUMN);
+    return $categories;
+}

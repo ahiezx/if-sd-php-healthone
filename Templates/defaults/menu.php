@@ -21,7 +21,7 @@
                         <a class="nav-link" href="/admin/home">beheer</a>
                     </li>
                 <?php endif; ?>
-                <?php if (isMember()): ?>
+                <?php if (isLogged()): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/member">profiel</a>
                     </li>
