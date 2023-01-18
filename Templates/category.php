@@ -1,6 +1,5 @@
 <?php
-//var_dump($_SESSION);
-//var_dump($_POST);
+
 $message = "";
 
 $request = $_SERVER['REQUEST_URI'];
@@ -20,7 +19,9 @@ switch ($params[1]) {
 
     case $params[1]:
         $category = $category->getCategoryById($params[2]);
-        if($category->id == null) {header("Location: /home");}
+        if ($category->id == null) {
+            header("Location: /home");
+        }
         $titleSuffix = " | " . $category->name;
         break;
 }
@@ -57,24 +58,27 @@ include_once('defaults/head.php');
                 <h1>
                     <?= htmlspecialchars($category->name) ?>
                 </h1>
+                <label for="product-search">Search for a product:</label>
+                <input type="search" id="product-search" name="product-search">
+                <input type="submit" value="Search">
                 <div class="d-flex">
                     <!-- get products by category id -->
                     <?php
-                        $products = $product->getProductsByCategoryId($category->id);
-                        foreach ($products as $product) {
-                            echo "<div class='col-md-2 m-2 mx-auto'>";
-                            echo "<a class='text-decoration-none text-body' href='/product/" . htmlspecialchars($product->id) . "'>";
-                            echo "<div class='card text-center'>";
-                            echo "<img src='/img/" . htmlspecialchars($product->picture) . "' class='card-img-top w-50 mx-auto mt-3' alt='...'>";
-                            echo "<div class='card-body'>";
-                            echo "<h5 class='card-title'>" . htmlspecialchars($product->name) . "</h5>";
-                            echo "<p class='card-text' style='font-size:14px;'>" . htmlspecialchars($product->description) . "</p>";
-                            // echo "<a href='/product/" . htmlspecialchars($product->id) . "' class='btn btn-primary'>Review";
-                            echo "</div>";
-                            echo "</div>";
-                            echo "</a>";
-                            echo "</div>";
-                        }
+                    $products = $product->getProductsByCategoryId($category->id);
+                    foreach ($products as $product) {
+                        echo "<div class='col-md-2 m-2 mx-auto'>";
+                        echo "<a class='text-decoration-none text-body' href='/product/" . htmlspecialchars($product->id) . "'>";
+                        echo "<div class='card text-center'>";
+                        echo "<img src='/img/" . htmlspecialchars($product->picture) . "' class='card-img-top w-50 mx-auto mt-3' alt='...'>";
+                        echo "<div class='card-body'>";
+                        echo "<h5 class='card-title'>" . htmlspecialchars($product->name) . "</h5>";
+                        echo "<p class='card-text' style='font-size:14px;'>" . htmlspecialchars($product->description) . "</p>";
+                        // echo "<a href='/product/" . htmlspecialchars($product->id) . "' class='btn btn-primary'>Review";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</a>";
+                        echo "</div>";
+                    }
                     ?>
                 </div>
 
@@ -88,6 +92,35 @@ include_once('defaults/head.php');
 
         ?>
     </div>
+
+    <script>
+        // Get all products
+const products = document.querySelectorAll('.card');
+
+// Get the search input
+const searchInput = document.querySelector('#product-search');
+
+// Add an event listener to the input
+searchInput.addEventListener('input', function() {
+  // Get the input value
+  const searchValue = this.value.toLowerCase();
+
+  // Loop through all products
+  products.forEach(function(product) {
+    // Get the product name
+    const productName = product.querySelector('.card-title').textContent.toLowerCase();
+
+    // Check if the product name includes the search value
+    if (productName.includes(searchValue)) {
+      // Show the product
+      product.style.display = 'block';
+    } else {
+      // Hide the product
+      product.style.display = 'none';
+    }
+  });
+});
+    </script>
 
 </body>
 

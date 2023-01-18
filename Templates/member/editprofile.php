@@ -49,15 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="#" method="post">
             <div class="form-group">
                 <label for="name">First Name</label>
-                <input type="text" class="form-control" name='first_name' id="name" placeholder="Enter your name">
+                <input type="text" class="form-control" name='first_name' id="name" placeholder="Enter your name" value='<?= $user->first_name ?>'>
             </div>
             <div class="form-group">
                 <label for="name">Last Name</label>
-                <input type="text" class="form-control" name='last_name' id="name" placeholder="Enter your name">
+                <input type="text" class="form-control" name='last_name' id="name" placeholder="Enter your name" value='<?= $user->last_name ?>'>
             </div>            
             <div class="form-group mt-2">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" name='email' id="email" placeholder="Enter your email">
+                <input type="email" class="form-control" name='email' id="email" placeholder="Enter your email" value='<?= $user->email ?>'>
             </div>
             <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
         </form>

@@ -20,7 +20,7 @@ include_once('defaults/head.php');
 
         $product->getProductById($params[2]);
 
-        if($product->id == null) {
+        if ($product->id == null) {
             header('Location: /home');
         }
 
@@ -60,6 +60,7 @@ include_once('defaults/head.php');
             </ol>
         </nav>
         <div class="row gy-3 ">
+        
             <!-- Review -->
             <?php if (!(isset($params[3]))) { ?>
                 <div class="col-md-12">
@@ -79,56 +80,69 @@ include_once('defaults/head.php');
                                             <?= htmlspecialchars($category->name) ?>
                                         </a></p>
                                     <!-- input of 5 stars -->
-                                    <form action="#" method="post">
-                                        <div class="form-group
-                                    <?php if (isset($errors['rating'])) {
-                                        echo 'has-error';
-                                    } ?>">
-                                            <!-- description field -->
-                                            <label for="description">Review Details</label>
-                                            <textarea name="description" id="description" class="form-control mt-2" rows="3"
-                                                placeholder="Description"></textarea>
-                                            <label for="rating">Rating</label>
-                                            <select name="stars" id="stars" class="form-control mt-2" required>
-                                                <option value="1" <?php if (isset($rating) && $rating == 1) {
-                                                    echo 'selected';
-                                                } ?>>1
-                                                </option>
-                                                <option value="2" <?php if (isset($rating) && $rating == 2) {
-                                                    echo 'selected';
-                                                } ?>>2
-                                                </option>
-                                                <option value="3" <?php if (isset($rating) && $rating == 3) {
-                                                    echo 'selected';
-                                                } ?>>3
-                                                </option>
-                                                <option value="4" <?php if (isset($rating) && $rating == 4) {
-                                                    echo 'selected';
-                                                } ?>>4
-                                                </option>
-                                                <option value="5" <?php if (isset($rating) && $rating == 5) {
-                                                    echo 'selected';
-                                                } ?>>5
-                                                </option>
-                                            </select>
-                                            <?php if (isset($errors['rating'])) { ?>
-                                                <span class="help-block"><?= $errors['rating'] ?></span>
-                                            <?php } ?>
-                                            <!-- display error message if not fields are filled -->
-                                            <?php if (isset($errors['description']) || isset($errors['rating'])) { ?>
+                                    <?php
+                                    if (isLogged()) {
+                                        ?>
+                                        <form action="#" method="post">
+                                            <div class="form-group
+                                            <?php if (isset($errors['rating'])) {
+                                                echo 'has-error';
+                                            } ?>">
+                                                <!-- description field -->
+                                                <label for="description">Review Details</label>
+                                                <textarea name="description" id="description" class="form-control mt-2" rows="3"
+                                                    placeholder="Description"></textarea>
+                                                <label for="rating">Rating</label>
+                                                <select name="stars" id="stars" class="form-control mt-2" required>
+                                                    <option value="1" <?php if (isset($rating) && $rating == 1) {
+                                                        echo 'selected';
+                                                    } ?>>1
+                                                    </option>
+                                                    <option value="2" <?php if (isset($rating) && $rating == 2) {
+                                                        echo 'selected';
+                                                    } ?>>2
+                                                    </option>
+                                                    <option value="3" <?php if (isset($rating) && $rating == 3) {
+                                                        echo 'selected';
+                                                    } ?>>3
+                                                    </option>
+                                                    <option value="4" <?php if (isset($rating) && $rating == 4) {
+                                                        echo 'selected';
+                                                    } ?>>4
+                                                    </option>
+                                                    <option value="5" <?php if (isset($rating) && $rating == 5) {
+                                                        echo 'selected';
+                                                    } ?>>5
+                                                    </option>
+                                                </select>
+                                                <?php if (isset($errors['rating'])) { ?>
+                                                    <span class="help-block"><?= $errors['rating'] ?></span>
+                                                <?php } ?>
+                                                <!-- display error message if not fields are filled -->
+                                                <?php if (isset($errors['description']) || isset($errors['rating'])) { ?>
+                                                    <div class="alert alert-danger mt-3" role="alert">
+                                                        Please fill in all fields
+                                                    </div>
+                                                <?php } ?>
+                                                <!-- display success message if review is posted -->
+                                                <?php if (isset($reviewed)) { ?>
+                                                    <div class="alert alert-success mt-3" role="alert">
+                                                        Review posted
+                                                    </div>
+                                                <?php } ?>
+                                                <input type="submit" class="btn btn-primary mt-3" value="Send Review">
+                                                <?php
+                                    } else {
+                                        ?>
                                                 <div class="alert alert-danger mt-3" role="alert">
-                                                    Please fill in all fields
+                                                    You need to be logged in to post a review
                                                 </div>
-                                            <?php } ?>
-                                            <!-- display success message if review is posted -->
-                                            <?php if (isset($reviewed)) { ?>
-                                                <div class="alert alert-success mt-3" role="alert">
-                                                    Review posted
-                                                </div>
-                                            <?php } ?>
-                                            <input type="submit" class="btn btn-primary mt-3" value="Send Review">
-                                        </div>
-                                    </form>
+
+                                            </div>
+                                        </form>
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -144,17 +158,19 @@ include_once('defaults/head.php');
                     foreach ($reviews->reviews as $review) {
                         $user = new User();
                         $user = $user->getUserById($review->user_id);
-                    ?>
+                        ?>
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
                                     <!-- <div class="col-md-2">
-                                        <img src="/img/<?= htmlspecialchars($user->picture) ?>" alt="user picture"
-                                            class="img-fluid">
-                                    </div> -->
+                                                <img src="/img/<?= htmlspecialchars($user->picture) ?>" alt="user picture"
+                                                    class="img-fluid">
+                                            </div> -->
                                     <div class="col-md-10">
                                         <h5>Name: <?= htmlspecialchars($user->first_name) ?></h5>
-                                        <?php if(isset($review->description) && $review->description != '') { ?> <p>Review Detials: <?= htmlspecialchars($review->description) ?></p><?php } ?>
+                                        <?php if (isset($review->description) && $review->description != '') { ?>
+                                            <p>Review Detials: <?= htmlspecialchars($review->description) ?></p>
+                                        <?php } ?>
                                         <p>Posted: <?= htmlspecialchars($review->date) ?></p>
                                         <p>
                                             <?php
@@ -177,7 +193,34 @@ include_once('defaults/head.php');
 
             ?>
         </div>
+    <script>
+        // Get all products
+const products = document.querySelectorAll('.card');
 
+// Get the search input
+const searchInput = document.querySelector('#product-search');
+
+// Add an event listener to the input
+searchInput.addEventListener('input', function() {
+  // Get the input value
+  const searchValue = this.value.toLowerCase();
+
+  // Loop through all products
+  products.forEach(function(product) {
+    // Get the product name
+    const productName = product.querySelector('.card-title').textContent.toLowerCase();
+
+    // Check if the product name includes the search value
+    if (productName.includes(searchValue)) {
+      // Show the product
+      product.style.display = 'block';
+    } else {
+      // Hide the product
+      product.style.display = 'none';
+    }
+  });
+});
+    </script>
 </body>
 
 </html>
