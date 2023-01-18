@@ -61,5 +61,25 @@ class Product
 
     }
 
+    public function delete()
+    {
+        global $pdo;
+        $statement = $pdo->prepare('DELETE FROM products WHERE id = :id');
+        $statement->execute(['id' => filter_var($this->id, FILTER_SANITIZE_NUMBER_INT)]);
+        return $statement->rowCount() > 0;
+    }
+
+    public function create()
+    {
+        global $pdo;
+        $statement = $pdo->prepare('INSERT INTO products (name, description, category_id) VALUES (:name, :description, :category_id)');
+        $statement->execute([
+            'name' => filter_var($this->name, FILTER_SANITIZE_STRING),
+            'description' => filter_var($this->description, FILTER_SANITIZE_STRING),
+            'category_id' => filter_var($this->category_id, FILTER_SANITIZE_NUMBER_INT)
+        ]);
+        return $statement->rowCount() > 0;
+    }
+
 
 }

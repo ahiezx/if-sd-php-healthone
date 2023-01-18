@@ -94,32 +94,23 @@ include_once('defaults/head.php');
     </div>
 
     <script>
-        // Get all products
-const products = document.querySelectorAll('.card');
+        const products = document.querySelectorAll('.card');
 
-// Get the search input
-const searchInput = document.querySelector('#product-search');
+        const searchInput = document.querySelector('#product-search');
 
-// Add an event listener to the input
-searchInput.addEventListener('input', function() {
-  // Get the input value
-  const searchValue = this.value.toLowerCase();
+        searchInput.addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
 
-  // Loop through all products
-  products.forEach(function(product) {
-    // Get the product name
-    const productName = product.querySelector('.card-title').textContent.toLowerCase();
+            products.forEach(function (product) {
+                const productName = product.querySelector('.card-title').textContent.toLowerCase();
 
-    // Check if the product name includes the search value
-    if (productName.includes(searchValue)) {
-      // Show the product
-      product.style.display = 'block';
-    } else {
-      // Hide the product
-      product.style.display = 'none';
-    }
-  });
-});
+                if (productName.includes(searchValue)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        });
     </script>
 
 </body>
