@@ -56,32 +56,30 @@ include_once('defaults/head.php');
 
             <div class="category-info">
                 <h1>
-                    <?= htmlspecialchars($category->name) ?>
+                    <?= $category->name ?>
                 </h1>
                 <label for="product-search">Search for a product:</label>
                 <input type="search" id="product-search" name="product-search">
                 <input type="submit" value="Search">
-                <div class="d-flex">
+                <div class="d-flex flex-wrap">
                     <!-- get products by category id -->
                     <?php
                     $products = $product->getProductsByCategoryId($category->id);
                     foreach ($products as $product) {
-                        echo "<div class='col-md-2 m-2 mx-auto'>";
-                        echo "<a class='text-decoration-none text-body' href='/product/" . htmlspecialchars($product->id) . "'>";
-                        echo "<div class='card text-center'>";
-                        echo "<img src='/img/" . htmlspecialchars($product->picture) . "' class='card-img-top w-50 mx-auto mt-3' alt='...'>";
-                        echo "<div class='card-body'>";
-                        echo "<h5 class='card-title'>" . htmlspecialchars($product->name) . "</h5>";
-                        echo "<p class='card-text' style='font-size:14px;'>" . htmlspecialchars($product->description) . "</p>";
-                        // echo "<a href='/product/" . htmlspecialchars($product->id) . "' class='btn btn-primary'>Review";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</a>";
-                        echo "</div>";
+                        echo '<div class="col-md-2 m-2 mx-auto">';
+                        echo '<a href="/product/' . $product->id . '" class="text-decoration-none text-body">';
+                        echo '<div class="card text-center">';
+                        echo '<img src="/' . $product->picture . '" class="card-img-top w-100 mx-auto" alt="' . $product->name . '">';
+                        echo '<div class="card-body">';
+                        echo '<h5 class="card-title">' . $product->name . '</h5>';
+                        echo '<p class="card-text" style="font-size:14px;">' . $product->description . '</p>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</a>';
+                        echo '</div>';
                     }
                     ?>
                 </div>
-
             </div>
 
         </div>

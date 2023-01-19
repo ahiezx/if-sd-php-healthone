@@ -15,7 +15,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'update') {
     $product->name = $_POST['name'];
     $product->description = $_POST['description'];
     $product->category_id = $_POST['category_id'];
-    var_dump($product->update());
+    if($_FILES['pic']['name'] == '') {
+        $product->picture = 'img/no-img.svg';
+    } else {
+        $product->picture = uploadPicture($_FILES['pic'], 'products');
+    }
+    $product->update();
+
+    $successMsg = "Product is aangepast";
 
     // die(var_dump($product));
 } elseif($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'create') {
@@ -24,7 +31,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'update') {
     $product->name = $_POST['name'];
     $product->description = $_POST['description'];
     $product->category_id = $_POST['category_id'];
+    if($_FILES['pic']['name'] == '') {
+        $product->picture = 'img/no-img.svg';
+    } else {
+        $product->picture = uploadPicture($_FILES['pic'], 'products');
+    }
     $product->create();
+
+    $successMsg = "Product is aangemaakt";
 }
 
 ?>
@@ -49,6 +63,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'update') {
                 <a href="/admin/products/create" class="btn btn-primary">Toevoegen</a>
             </div>
         </div>
+        <?= isset($successMsg) ? "<div class='alert alert-success' role='alert'>$successMsg</div>" : "" ?>
         <?php if(isset($params[2]) && $params[2] == 'products' && !isset($params[3])) { ?>
         <table class="table">
             <thead>
@@ -80,7 +95,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'update') {
                 header('Location: /admin/products');
             }
             ?>
-            <form action="#" method="post">
+            <form action="#" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class='col-md-6 form-group'>
                         <label for="name">Naam</label>
@@ -101,8 +116,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'update') {
                     </div>
                     <!-- image fileupload -->
                     <div class='col-md-12 form-group mt-2'>
-                        <label for="image">Afbeelding</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <label for="picture">Afbeelding</label>
+                        <input type="file" class="form-control" name="pic">
                     </div>
                     <div class='col-md-12 form-group mt-2'>
                         <input type="hidden" name="action" value="update">
@@ -122,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'update') {
         <?php } ?>
 
         <?php if(isset($params[2]) && $params[2] == 'products' && isset($params[3]) && $params[3] == 'create') { ?>
-            <form action="#" method="post">
+            <form action="#" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class='col-md-6 form-group'>
                         <label for="name">Naam</label>
@@ -143,8 +158,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'update') {
                     </div>
                     <!-- image fileupload -->
                     <div class='col-md-12 form-group mt-2'>
-                        <label for="image">Afbeelding</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <label for="pic">Afbeelding</label>
+                        <input type="file" class="form-control" id="pic" name="pic"> 
                     </div>
                     <div class='col-md-12 form-group mt-2'>
                         <input type="hidden" name="action" value="create">
